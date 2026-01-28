@@ -1,0 +1,133 @@
+.success-container {
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 40px 24px 60px;
+  background: #ffffff;
+  border-radius: 18px;
+  text-align: center;
+}
+
+/* SUCCESS ICON */
+.success-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.success-icon {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #d4f4dd, #e8f5e9);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  color: #16a34a;
+  font-weight: bold;
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.15);
+}
+
+/* SUCCESS HEADING */
+.success-heading {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin: 24px 0 16px;
+}
+
+.success-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #16823a;
+  margin: 16px 0 8px;
+  text-align: center;
+}
+
+/* SUCCESS MESSAGE */
+.success-message {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  padding: 0 16px;
+}
+
+.amount-highlight {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* INSTRUCTION BOX */
+.instruction-box {
+  background: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.warning-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.instruction-text {
+  font-size: 14px;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+.instruction-text strong {
+  color: #78350f;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* RETURN BUTTON */
+.return-btn {
+  width: 100%;
+  max-width: 380px;
+  height: 52px;
+  background: #1f2937;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 16px;
+}
+
+.return-btn:hover {
+  background: #111827;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.return-btn:active {
+  transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+@media (max-width: 350px) {
+  .success-heading {
+    font-size: 28px;
+  }
+  
+  .success-title {
+    font-size: 24px;
+  }
+  
+  .success-icon {
+    width: 100px;
+    height: 100px;
+    font-size: 52px;
+  }
+}

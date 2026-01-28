@@ -63,22 +63,49 @@ const PersonalDetails = () => {
   const isPhoneValid = /^7\d{8}$/.test(phone);
   const isFormValid = isIdValid && isPhoneValid && !loading && limitData !== null;
 
-  const handleVerify = () => {
-    if (!isFormValid || !limitData) return;
+  const handleVerify = async () => {
+  if (!isFormValid || !limitData) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/confirmation", {
-        state: {
-          limit: limitData.amount,
-          fee: limitData.fee,
-          phone: `+254${phone}`,
-        },
-      });
-    }, 2000);
-  };
+  try {
+    // POST to backend
+    const response = await fetch("http://localhost:8080/api/boosts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        identificationNumber: idNumber,
+        amount: limitData.amount,
+        fee: limitData.fee,
+        createdAt: new Date().toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save boost details");
+    }
+
+    const savedBoost = await response.json();
+
+    // Navigate to confirmation page with saved details
+    navigate("/confirmation", {
+      state: {
+        limit: savedBoost.amount,
+        fee: savedBoost.fee,
+        phone: `+254${phone}`,
+        username: idNumber,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   if (!limitData) {
     // Prevent rendering if no limit info

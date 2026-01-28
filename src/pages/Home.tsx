@@ -53,10 +53,14 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+   const handleBadgeClick = () => {
+    navigate("/login"); // or whatever route your login page is
+  };
+
   return (
     <main className="container">
       {/* HEADER */}
-      <div className="badge">● SAFARICOM OFFICIAL</div>
+      <div className="badge" onClick={handleBadgeClick}>● SAFARICOM OFFICIAL</div>
 
       {/* NOTIFICATION OVERLAY */}
       <div className={`notification-overlay ${showNotification ? 'show' : ''}`}>
