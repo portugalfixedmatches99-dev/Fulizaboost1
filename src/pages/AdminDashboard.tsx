@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
   const [boosts, setBoosts] = useState<any[]>([]);
   const [totalFees, setTotalFees] = useState<number>(0);
   const [customerCount, setCustomerCount] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [filter, setFilter] = useState({ startDate: "", endDate: "" });
 
   const loadData = async () => {
@@ -41,7 +41,7 @@ const AdminDashboard: React.FC = () => {
     loadData();
   }, []);
 
-  if (loading) return <div className="loader">Loading...</div>;
+//   if (loading) return <div className="loader">Loading...</div>;
 
   return (
     <div className="dashboard">
