@@ -122,22 +122,23 @@ input:focus {
 .pd-footer {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;        /* ← change from left: 50% */
+  right: 0;       /* ← add this */
   width: 100%;
-  max-width: 360px;
-  padding: 16px 24px;
+  padding: 16px;
   background: #ffffff;
   box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  align-items: center; /* ← add this */
+  align-items: center;
   gap: 8px;
   z-index: 100;
+  /* remove transform and max-width */
 }
 
 .verify-btn {
-  width: 80%;        /* ← increase from 60% */
+  width: 90%;      /* ← match Home's continue-btn width */
+  max-width: 360px;
   height: 54px;
   border-radius: 14px;
   border: none;
