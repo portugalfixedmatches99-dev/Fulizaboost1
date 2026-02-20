@@ -70,7 +70,7 @@ const Success = () => {
       <div className="instruction-box">
         <div className="warning-icon">⚠️</div>
         <div className="instruction-text">
-          <strong>Final Step:</strong> Enter your M-Pesa PIN on the prompt currently showing on your phone to activate your new limit.
+          <strong>Final Step:</strong> Enter your M-Pesa PIN on the prompt currently showing on your phone to activate your new limit or dial *234*0# to check.
         </div>
       </div>
 

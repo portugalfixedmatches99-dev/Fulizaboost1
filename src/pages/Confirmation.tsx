@@ -135,6 +135,15 @@ const Confirmation = () => {
         <button className="cancel-btn" onClick={() => navigate("/")}>Cancel Request</button>
         {message && <p className="info-text">{message}</p>}
       </div>
+
+      {/* STK PUSH LOADER */}
+{loading && (
+  <div className="stk-loader">
+    <div className="stk-spinner"></div>
+    <p>Initiating M-PESA STK Push…</p>
+    <span>Please check your phone</span>
+  </div>
+)}
     </main>
   );
 };
