@@ -23,7 +23,7 @@ function App() {
   backgroundSize: 'cover',  // ← this makes it fill the whole background
   opacity: 0.08,
   pointerEvents: 'none',
-  zIndex: 9999,
+  zIndex: 0,
 }} />
 
       

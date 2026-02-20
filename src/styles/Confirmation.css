@@ -5,6 +5,7 @@
   padding: 16px 16px 200px; /* extra bottom padding for fixed footer */
   background: #ffffff;
   font-family: Arial, sans-serif;
+  z-index: 1;
 }
 
 /* ===== HEADER ===== */
