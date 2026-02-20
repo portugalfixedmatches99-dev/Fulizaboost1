@@ -66,7 +66,7 @@ const Home = () => {
 
       {/* NOTIFICATION OVERLAY */}
       <div className={`notification-overlay ${showNotification ? 'show' : ''}`}>
-        <div className="notification-icon">✅</div>
+        <div className="notification-icon"></div>
         <div className="notification-content">
           <strong>{currentNotification.phone}</strong> increased to Ksh {currentNotification.limit.toLocaleString()}
           <div className="notification-time">• just now</div>
