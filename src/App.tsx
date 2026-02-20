@@ -21,7 +21,7 @@ function App() {
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',  // ← this makes it fill the whole background
-  opacity: 0.08,
+  opacity: 0.15,
   pointerEvents: 'none',
   zIndex: 0,
 }} />

@@ -3,7 +3,7 @@
   max-width: 420px;
   margin: auto;
   padding: 16px 16px 200px; /* extra bottom padding for fixed footer */
-  background: #ffffff;
+   background: rgba(255, 255, 255, 0.92); 
   font-family: Arial, sans-serif;
   z-index: 1;
 }
