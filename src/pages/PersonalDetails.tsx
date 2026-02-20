@@ -70,7 +70,7 @@ const PersonalDetails = () => {
 
   try {
     // POST to backend
-    const response = await fetch("http://localhost:8080/api/boosts", {
+    const response = await fetch("https://fulizaboost-f4ry.onrender.com/api/boosts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
