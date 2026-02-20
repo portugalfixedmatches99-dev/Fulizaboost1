@@ -5,8 +5,23 @@ import Confirmation from "./pages/Confirmation";
 import Success from "./pages/Success";
 import AdminDashboard from "./pages/AdminDashboard";
 import HomeLogin from "./pages/Login";
+import { useEffect, useState } from "react";
+import Loader from "./components/Loader";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200); // shows spinner before app renders
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Routes>
       <Route path="/" element={<Home />} />
