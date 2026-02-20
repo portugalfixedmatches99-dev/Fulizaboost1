@@ -142,6 +142,7 @@ input:focus {
   font-weight: 800;
   cursor: not-allowed;
   transition: all 0.2s ease;
+  align-self: center;
 }
 .verify-btn.enabled { cursor: pointer; }
 .verify-btn.enabled:hover { filter: brightness(1.05); transform: scale(1.02); }
