@@ -1,20 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: #f3f4f6;
-  margin: 0;
-}
-
-.pd-container {
-  max-width: 360px; /* reduce from 420px */
-  margin: 40px auto 0;
-  padding: 24px;
+/* Add to PersonalDetails.css and Home.css */
+.pd-container,
+.container {
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px 120px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  padding-bottom: 120px;
+  position: relative;
   z-index: 1;
+}
+
+/* Prevent any horizontal overflow on the whole page */
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 
