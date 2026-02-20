@@ -19,15 +19,7 @@
   z-index: 1;
 }
 
-/* Prevent any horizontal overflow on the whole page */
-body {
-  overflow-x: hidden;
-  min-height: 100vh;
-}
 
-html {
-  overflow-x: hidden;
-}
 
 /* ===== HEADERS ===== */
 .badge {

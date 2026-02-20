@@ -12,17 +12,10 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   position: relative;
   z-index: 1;
+  
 }
 
-/* Prevent any horizontal overflow on the whole page */
-body {
-  overflow-x: hidden;
-  min-height: 100vh;
-}
 
-html {
-  overflow-x: hidden;
-}
 
 
 
