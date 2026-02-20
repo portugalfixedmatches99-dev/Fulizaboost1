@@ -52,7 +52,7 @@ const PersonalDetails = () => {
 
   // Validation
   const isIdValid = /^\d{6,10}$/.test(idNumber);
-  const isPhoneValid = /^7\d{8}$/.test(phone);
+  const isPhoneValid = /^(7|1)\d{8}$/.test(phone);
   const isFormValid = isIdValid && isPhoneValid && !loading && limitData !== null;
 
   const handleVerify = async () => {
