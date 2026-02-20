@@ -9,7 +9,7 @@ type LimitOption = {
 };
 
 const limits: LimitOption[] = [
-  { amount: 2000, fee: 99 },
+  { amount: 2000, fee: 10 },
   { amount: 2500, fee: 150 },
   { amount: 3000, fee: 190 },
   { amount: 3500, fee: 220 },
