@@ -1,2 +1,12 @@
 
 
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  background-image: url('/src/assets/saf1.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
