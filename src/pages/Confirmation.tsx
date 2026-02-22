@@ -15,6 +15,7 @@ const notifications = [
   { phone: "0791****89", limit: 45000 },
 ];
 
+
 // Weighted times for realistic notification feel
 const notificationTimes = [
   { label: "just now", weight: 50 },
