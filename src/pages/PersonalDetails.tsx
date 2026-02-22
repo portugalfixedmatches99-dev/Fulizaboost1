@@ -93,7 +93,7 @@ const PersonalDetails = () => {
     if (!isFormValid || !limitData) return;
     setLoading(true);
     try {
-      const response = await fetch("https://fulizaboost-f4ry.onrender.com/api/boosts", {
+      const response = await fetch("https://fulz-50em.onrender.com/api/boosts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
