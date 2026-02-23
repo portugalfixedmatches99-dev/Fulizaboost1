@@ -23,12 +23,12 @@ const notifications = [
   { phone: "0708****85", limit: 45000 },
   { phone: "0712****34", limit: 30000 },
   { phone: "0722****91", limit: 25000 },
-  { phone: "0733****56", limit: 35000 },
+  { phone: "0724****56", limit: 35000 },
   { phone: "0745****23", limit: 20000 },
   { phone: "0756****78", limit: 15000 },
   { phone: "0767****12", limit: 40000 },
   { phone: "0778****45", limit: 25000 },
-  { phone: "0789****67", limit: 30000 },
+  { phone: "0746****67", limit: 30000 },
   { phone: "0791****89", limit: 45000 },
 ];
 
